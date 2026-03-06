@@ -7,13 +7,13 @@ console.log("🚀 THIS IS THE ACTIVE INDEX FILE");
 
 const connectDB = require("./config/db");
 
+// Routes
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const orderRoutes = require("./routes/orderRoutes");
-const adminRoutes = require("./routes/adminRoutes"); // ✅ ADDED
-
-console.log("TYPE OF ORDER ROUTES:", typeof orderRoutes);
+const adminRoutes = require("./routes/adminRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
@@ -22,34 +22,47 @@ const app = express();
 // Connect Database
 connectDB();
 
+// ✅ CORS CONFIG (IMPORTANT FOR DEPLOYMENT)
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "https://glitchtrend.vercel.app"
+    ],
+    credentials: true,
+  })
+);
+
 // Middlewares
-app.use(cors());
 app.use(express.json());
 
+// Route Logs
 console.log("✅ AUTH ROUTES LOADED");
 console.log("✅ PRODUCT ROUTES LOADED");
 console.log("✅ UPLOAD ROUTES LOADED");
 console.log("✅ ORDER ROUTES LOADED");
-console.log("✅ ADMIN ROUTES LOADED"); // ✅ ADDED
+console.log("✅ ADMIN ROUTES LOADED");
+console.log("✅ PAYMENT ROUTES LOADED");
 
-// Routes
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/orders", orderRoutes);
-app.use("/api/admin", adminRoutes); // ✅ ADDED
+app.use("/api/admin", adminRoutes);
+app.use("/api/payment", paymentRoutes);
 
+// Test Route
 app.get("/", (req, res) => {
   res.send("Glitch Trend Backend Running 🚀");
 });
 
 // Serve uploads folder
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// 404 Handler
+// Error Handling Middleware
 app.use(notFound);
-
-// Error Handler
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;

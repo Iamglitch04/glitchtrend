@@ -51,7 +51,7 @@ const getOrders = async (req, res) => {
   }
 };
 
-// ✅ GET ORDER BY ID
+// GET ORDER BY ID
 const getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id).populate(
@@ -83,6 +83,13 @@ const updateOrderToPaid = async (req, res) => {
 
     order.isPaid = true;
     order.paidAt = Date.now();
+
+    order.paymentResult = {
+      id: req.body.razorpay_payment_id,
+      status: "completed",
+      update_time: Date.now(),
+      email_address: req.user.email,
+    };
 
     const updatedOrder = await order.save();
     res.json(updatedOrder);
@@ -117,7 +124,7 @@ module.exports = {
   addOrderItems,
   getMyOrders,
   getOrders,
-  getOrderById, // ✅ added
+  getOrderById,
   updateOrderToPaid,
   updateOrderToDelivered,
 };
