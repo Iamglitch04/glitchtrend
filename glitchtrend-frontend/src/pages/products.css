@@ -1,0 +1,82 @@
+.store{
+  padding:40px;
+  background:black;
+  color:white;
+}
+
+/* HERO */
+
+.hero{
+  text-align:center;
+  padding:80px 20px;
+  background:linear-gradient(90deg,#111,#000);
+  border-radius:12px;
+  margin-bottom:40px;
+}
+
+.hero h1{
+  font-size:60px;
+  font-weight:800;
+}
+
+.hero p{
+  margin-top:10px;
+  color:#aaa;
+}
+
+.hero button{
+  margin-top:20px;
+  padding:12px 30px;
+  background:linear-gradient(90deg,#ff00cc,#3333ff);
+  border:none;
+  border-radius:30px;
+  color:white;
+  cursor:pointer;
+}
+
+/* PRODUCT GRID */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+}
+
+/* CARD */
+
+.card{
+  background:#111;
+  padding:15px;
+  border-radius:10px;
+  transition:0.3s;
+}
+
+.card img{
+  width:100%;
+  border-radius:8px;
+}
+
+.card h3{
+  margin-top:10px;
+}
+
+.card p{
+  color:#aaa;
+}
+
+.card button{
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  background:#fff;
+  color:black;
+  cursor:pointer;
+}
+
+/* HOVER */
+
+.card:hover{
+  transform:translateY(-6px);
+}

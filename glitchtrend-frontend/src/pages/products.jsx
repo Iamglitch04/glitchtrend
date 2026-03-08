@@ -1,74 +1,56 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import "./Products.css";
 
 function Products() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    fetch("https://glitchtrend.onrender.com/api/products")
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data);
-      });
-  }, []);
+  const [products] = useState([
+    {
+      id: 1,
+      name: "Glitch Hoodie",
+      price: 49,
+      image: "https://images.unsplash.com/photo-1520975928316-56d6c2d8e3c1"
+    },
+    {
+      id: 2,
+      name: "Cyber Street Tee",
+      price: 29,
+      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"
+    },
+    {
+      id: 3,
+      name: "Urban Cap",
+      price: 19,
+      image: "https://images.unsplash.com/photo-1588854337221-4cf9fa96059c"
+    },
+    {
+      id: 4,
+      name: "Street Jacket",
+      price: 89,
+      image: "https://images.unsplash.com/photo-1544441893-675973e31985"
+    }
+  ]);
 
   return (
-    <div style={{ padding: "40px" }}>
-      <h1 style={{ marginBottom: "30px" }}>Products</h1>
+    <div className="store">
 
-      {products.length === 0 ? (
-        <p>No products found</p>
-      ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-            gap: "20px",
-          }}
-        >
-          {products.map((product) => (
-            <div
-              key={product._id}
-              style={{
-                background: "#111",
-                borderRadius: "10px",
-                padding: "15px",
-                color: "white",
-                textAlign: "center",
-                transition: "0.2s",
-              }}
-            >
-              <img
-                src={product.image || "https://via.placeholder.com/300"}
-                alt={product.name}
-                style={{
-                  width: "100%",
-                  borderRadius: "8px",
-                  marginBottom: "10px",
-                }}
-              />
+      {/* HERO SECTION */}
+      <div className="hero">
+        <h1>GLITCHTREND</h1>
+        <p>Streetwear For The Future</p>
+        <button>Shop Now</button>
+      </div>
 
-              <h3>{product.name}</h3>
+      {/* PRODUCTS */}
+      <div className="products">
+        {products.map((product) => (
+          <div className="card" key={product.id}>
+            <img src={product.image} />
+            <h3>{product.name}</h3>
+            <p>${product.price}</p>
+            <button>Add to Cart</button>
+          </div>
+        ))}
+      </div>
 
-              <p style={{ fontWeight: "bold", margin: "8px 0" }}>
-                ₹{product.price}
-              </p>
-
-              <button
-                style={{
-                  background: "#ff00ff",
-                  border: "none",
-                  padding: "8px 14px",
-                  color: "white",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                }}
-              >
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
