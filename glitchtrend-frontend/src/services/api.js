@@ -1,6 +1,6 @@
-const API = "https://glitchtrend-backend.onrender.com";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const getProducts = async () => {
-  const response = await fetch(`${API}/api/products`);
+  const response = await fetch(`${API_URL}/api/products`);
   return response.json();
 };
