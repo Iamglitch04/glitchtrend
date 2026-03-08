@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import Admin from "./pages/Admin";
-import Products from "./pages/Products.jsx";
+import Products from "./pages/Products";
 
 function App() {
   return (
