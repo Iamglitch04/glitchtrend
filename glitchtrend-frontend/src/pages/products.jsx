@@ -10,36 +10,58 @@ function Products() {
   }, []);
 
   return (
-    <div style={{ padding: "40px" }}>
-      <h1>Products</h1>
+    <div style={{ padding: "40px", maxWidth: "1200px", margin: "auto" }}>
+      <h1 style={{ marginBottom: "30px" }}>GlitchTrend Store</h1>
 
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-          gap: "20px",
+          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+          gap: "25px",
         }}
       >
-        {products.map((p) => (
+        {products.map((product) => (
           <div
-            key={p._id}
+            key={product._id}
             style={{
-              border: "1px solid #ddd",
-              padding: "15px",
-              borderRadius: "10px",
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+              background: "#fff",
+              transition: "transform 0.2s",
             }}
           >
             <img
-              src={p.image || "https://via.placeholder.com/300"}
-              alt={p.name}
-              style={{ width: "100%", borderRadius: "8px" }}
+              src={product.image || "https://via.placeholder.com/400"}
+              alt={product.name}
+              style={{
+                width: "100%",
+                height: "250px",
+                objectFit: "cover",
+              }}
             />
 
-            <h3>{p.name}</h3>
+            <div style={{ padding: "15px" }}>
+              <h3 style={{ margin: "0 0 10px 0" }}>{product.name}</h3>
 
-            <p>₹{p.price}</p>
+              <p style={{ color: "#555" }}>{product.description}</p>
 
-            <button>Add to Cart</button>
+              <h2 style={{ margin: "10px 0" }}>₹{product.price}</h2>
+
+              <button
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  border: "none",
+                  background: "black",
+                  color: "white",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                }}
+              >
+                Add to Cart
+              </button>
+            </div>
           </div>
         ))}
       </div>
