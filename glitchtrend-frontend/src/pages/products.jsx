@@ -2,12 +2,13 @@ import { useState } from "react";
 import "./products.css";
 
 function Products() {
+
   const [products] = useState([
     {
       id: 1,
       name: "Glitch Hoodie",
       price: "$49",
-      image: "https://images.unsplash.com/photo-1520975928316-56d6c2d8e3c1"
+      image: "https://images.unsplash.com/photo-1556821840-3a9fbcf9b5b9"
     },
     {
       id: 2,
@@ -30,7 +31,7 @@ function Products() {
       <div className="products">
         {products.map((product) => (
           <div className="card" key={product.id}>
-            <img src={product.image} />
+            <img src={product.image} alt={product.name} />
             <h3>{product.name}</h3>
             <p>{product.price}</p>
             <button>Add to Cart</button>
