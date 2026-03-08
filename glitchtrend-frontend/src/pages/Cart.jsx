@@ -9,7 +9,7 @@ function Cart() {
     try {
       // 1️⃣ Create order from backend
       const response = await fetch(
-        "http://localhost:5000/api/payment/create-order",
+        "https://glitchtrend-backend.onrender.com/api/payment/create-order",
         {
           method: "POST",
           headers: {
@@ -32,7 +32,7 @@ function Cart() {
         handler: async function (paymentResponse) {
           // 2️⃣ Verify payment
           const verifyRes = await fetch(
-            "http://localhost:5000/api/payment/verify",
+            "https://glitchtrend-backend.onrender.com/api/payment/verify",
             {
               method: "POST",
               headers: {
@@ -46,7 +46,7 @@ function Cart() {
 
           if (data.success) {
             // 3️⃣ Save order to MongoDB
-            await fetch("http://localhost:5000/api/orders", {
+            await fetch("https://glitchtrend-backend.onrender.com/api/orders", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
+import { getProducts } from "../api";
 
 function Home() {
   const [products, setProducts] = useState([]);
   const { addToCart } = useCart();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("PRODUCTS:", data);
-        setProducts(data);
-      })
+    getProducts()
+      .then((data) => setProducts(data))
       .catch((err) => console.log(err));
   }, []);
 
