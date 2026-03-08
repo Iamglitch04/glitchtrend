@@ -1,4 +1,4 @@
-const API = "https://your-render-backend.onrender.com";
+const API = "https://glitchtrend-backend.onrender.com";
 
 export const getProducts = async () => {
   const response = await fetch(`${API_URL}/api/products`);
