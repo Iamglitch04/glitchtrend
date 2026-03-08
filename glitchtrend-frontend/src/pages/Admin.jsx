@@ -7,30 +7,35 @@ function Admin() {
   const [image, setImage] = useState("");
 
   const addProduct = async () => {
-    const res = await fetch(
-      "https://glitchtrend-backend.onrender.com/api/products",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          price,
-          description,
-          image,
-        }),
-      }
-    );
+    try {
+      const res = await fetch(
+        "https://glitchtrend.onrender.com/api/products",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            price,
+            description,
+            image,
+          }),
+        }
+      );
 
-    const data = await res.json();
-    alert("Product Added!");
+      const data = await res.json();
 
-    console.log(data);
+      alert("Product Added ✅");
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <div style={{ padding: "60px" }}>
+    <div style={{ padding: "50px" }}>
       <h1>Add Product</h1>
 
       <input
