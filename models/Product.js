@@ -1,4 +1,4 @@
-const mongoose = require("mongoose"); // ✅ ADD THIS
+const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: false, // optional for now
+      required: false,
     },
 
     image: {
