@@ -1,74 +1,35 @@
 const express = require("express");
-const cors = require("cors");
-const path = require("path");
-require("dotenv").config();
+const router = express.Router();
 
-console.log("🚀 THIS IS THE ACTIVE INDEX FILE");
+// TEMP products array (until database is used)
+let products = [];
 
-const connectDB = require("./config/db");
-
-// Routes
-const authRoutes = require("./routes/authRoutes");
-const productRoutes = require("./routes/productRoutes");
-const uploadRoutes = require("./routes/uploadRoutes");
-const orderRoutes = require("./routes/orderRoutes");
-const adminRoutes = require("./routes/adminRoutes");
-const paymentRoutes = require("./routes/paymentRoutes");
-
-const { notFound, errorHandler } = require("./middleware/errorMiddleware");
-
-const app = express();
-
-// Connect Database
-connectDB();
-
-// ✅ CORS CONFIG (IMPORTANT FOR DEPLOYMENT)
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:3000",
-      "https://glitchtrend.vercel.app"
-    ],
-    credentials: true,
-  })
-);
-
-// Middlewares
-app.use(express.json());
-
-// Route Logs
-console.log("✅ AUTH ROUTES LOADED");
-console.log("✅ PRODUCT ROUTES LOADED");
-console.log("✅ UPLOAD ROUTES LOADED");
-console.log("✅ ORDER ROUTES LOADED");
-console.log("✅ ADMIN ROUTES LOADED");
-console.log("✅ PAYMENT ROUTES LOADED");
-
-// API Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/upload", uploadRoutes);
-app.use("/api/orders", orderRoutes);
-app.use("/api/admin", adminRoutes);
-app.use("/api/payment", paymentRoutes);
-
-// Test Route
-app.get("/", (req, res) => {
-  res.send("Glitch Trend Backend Running 🚀");
+// GET all products
+router.get("/", (req, res) => {
+  res.json(products);
 });
 
-// Serve uploads folder
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// POST add product
+router.post("/", (req, res) => {
+  const { name, price, description, image } = req.body;
 
-// Error Handling Middleware
-app.use(notFound);
-app.use(errorHandler);
+  if (!name || !price) {
+    return res.status(400).json({ message: "Name and price required" });
+  }
 
-const PORT = process.env.PORT || 5000;
+  const newProduct = {
+    id: Date.now(),
+    name,
+    price,
+    description,
+    image,
+  };
 
-app.listen(PORT, () => {
-  console.log(`🔥 Server running on port ${PORT}`);
+  products.push(newProduct);
+
+  res.status(201).json(newProduct);
 });
+
+module.exports = router;
 
 
