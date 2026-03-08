@@ -1,92 +1,60 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Admin() {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [products, setProducts] = useState([]);
 
-  const addProduct = async () => {
-    if (!name || !price || !image || !description) {
-      alert("Please fill all fields");
-      return;
-    }
+  const loadProducts = async () => {
+    const res = await fetch("https://glitchtrend.onrender.com/api/products");
+    const data = await res.json();
+    setProducts(data);
+  };
 
-    try {
-      const res = await fetch(
-        "https://glitchtrend.onrender.com/api/products",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name,
-            price: Number(price),
-            description,
-            image,
-          }),
-        }
-      );
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
-      const data = await res.json();
+  const deleteProduct = async (id) => {
+    await fetch(`https://glitchtrend.onrender.com/api/products/${id}`, {
+      method: "DELETE",
+    });
 
-      if (res.ok) {
-        alert("Product Added ✅");
+    alert("Product Deleted");
 
-        // clear form
-        setName("");
-        setPrice("");
-        setDescription("");
-        setImage("");
-      } else {
-        alert("Failed to add product");
-      }
-
-      console.log(data);
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Server error");
-    }
+    loadProducts();
   };
 
   return (
-    <div style={{ padding: "50px" }}>
-      <h1>Add Product</h1>
+    <div style={{ padding: "40px" }}>
+      <h1>Admin Panel</h1>
 
-      <input
-        placeholder="Product Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+      {products.map((p) => (
+        <div
+          key={p._id}
+          style={{
+            border: "1px solid #ddd",
+            marginBottom: "15px",
+            padding: "10px",
+            borderRadius: "8px",
+          }}
+        >
+          <h3>{p.name}</h3>
+          <p>₹{p.price}</p>
 
-      <br /><br />
-
-      <input
-        placeholder="Price"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-      />
-
-      <br /><br />
-
-      <input
-        placeholder="Image URL"
-        value={image}
-        onChange={(e) => setImage(e.target.value)}
-      />
-
-      <br /><br />
-
-      <textarea
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-
-      <br /><br />
-
-      <button onClick={addProduct}>Add Product</button>
+          <button
+            onClick={() => deleteProduct(p._id)}
+            style={{
+              background: "red",
+              color: "white",
+              border: "none",
+              padding: "8px 12px",
+              cursor: "pointer",
+              borderRadius: "5px",
+            }}
+          >
+            Delete
+          </button>
+        </div>
+      ))}
     </div>
   );
 }

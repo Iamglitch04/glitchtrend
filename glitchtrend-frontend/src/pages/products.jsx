@@ -6,65 +6,69 @@ function Products() {
   useEffect(() => {
     fetch("https://glitchtrend.onrender.com/api/products")
       .then((res) => res.json())
-      .then((data) => setProducts(data));
+      .then((data) => {
+        setProducts(data);
+      });
   }, []);
 
   return (
-    <div style={{ padding: "40px", maxWidth: "1200px", margin: "auto" }}>
-      <h1 style={{ marginBottom: "30px" }}>GlitchTrend Store</h1>
+    <div style={{ padding: "40px" }}>
+      <h1 style={{ marginBottom: "30px" }}>Products</h1>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-          gap: "25px",
-        }}
-      >
-        {products.map((product) => (
-          <div
-            key={product._id}
-            style={{
-              borderRadius: "12px",
-              overflow: "hidden",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-              background: "#fff",
-              transition: "transform 0.2s",
-            }}
-          >
-            <img
-              src={product.image || "https://via.placeholder.com/400"}
-              alt={product.name}
+      {products.length === 0 ? (
+        <p>No products found</p>
+      ) : (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+            gap: "20px",
+          }}
+        >
+          {products.map((product) => (
+            <div
+              key={product._id}
               style={{
-                width: "100%",
-                height: "250px",
-                objectFit: "cover",
+                background: "#111",
+                borderRadius: "10px",
+                padding: "15px",
+                color: "white",
+                textAlign: "center",
+                transition: "0.2s",
               }}
-            />
+            >
+              <img
+                src={product.image || "https://via.placeholder.com/300"}
+                alt={product.name}
+                style={{
+                  width: "100%",
+                  borderRadius: "8px",
+                  marginBottom: "10px",
+                }}
+              />
 
-            <div style={{ padding: "15px" }}>
-              <h3 style={{ margin: "0 0 10px 0" }}>{product.name}</h3>
+              <h3>{product.name}</h3>
 
-              <p style={{ color: "#555" }}>{product.description}</p>
-
-              <h2 style={{ margin: "10px 0" }}>₹{product.price}</h2>
+              <p style={{ fontWeight: "bold", margin: "8px 0" }}>
+                ₹{product.price}
+              </p>
 
               <button
                 style={{
-                  width: "100%",
-                  padding: "10px",
+                  background: "#ff00ff",
                   border: "none",
-                  background: "black",
+                  padding: "8px 14px",
                   color: "white",
-                  borderRadius: "6px",
+                  borderRadius: "5px",
                   cursor: "pointer",
                 }}
               >
                 Add to Cart
               </button>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
