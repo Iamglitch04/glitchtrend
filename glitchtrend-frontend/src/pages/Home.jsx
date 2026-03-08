@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
-import { getProducts } from "../api";
 
 function Home() {
   const [products, setProducts] = useState([]);
   const { addToCart } = useCart();
 
   useEffect(() => {
-    getProducts()
-      .then((data) => setProducts(data))
+    fetch("https://glitchtrend-backend.onrender.com/api/products")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("PRODUCTS:", data);
+        setProducts(data);
+      })
       .catch((err) => console.log(err));
   }, []);
 
