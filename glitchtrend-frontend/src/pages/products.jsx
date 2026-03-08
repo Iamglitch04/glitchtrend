@@ -1,40 +1,29 @@
-import { useState } from "react";
-import "./products.css";
-
 function Products() {
-
-  const [products] = useState([
+  const products = [
     {
       id: 1,
-      name: "Glitch Hoodie",
-      price: "$49",
-      image: "https://images.unsplash.com/photo-1556821840-3a9fbcf9b5b9"
+      name: "Nike Air Max",
+      price: "$120",
+      image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/air-max-270-shoes-KkLcGR.png"
     },
     {
       id: 2,
-      name: "Cyber Street Tee",
-      price: "$29",
-      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"
-    },
-    {
-      id: 3,
-      name: "Urban Cap",
-      price: "$19",
-      image: "https://images.unsplash.com/photo-1588854337221-4cf9fa96059c"
+      name: "Nike Revolution",
+      price: "$90",
+      image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/revolution-6-next-nature-road-running-shoes.png"
     }
-  ]);
+  ];
 
   return (
-    <div className="store">
+    <div style={{ padding: "20px" }}>
       <h1>Products</h1>
 
-      <div className="products">
-        {products.map((product) => (
-          <div className="card" key={product.id}>
-            <img src={product.image} alt={product.name} />
-            <h3>{product.name}</h3>
-            <p>{product.price}</p>
-            <button>Add to Cart</button>
+      <div style={{ display: "flex", gap: "20px" }}>
+        {products.map((item) => (
+          <div key={item.id} style={{ border: "1px solid #ddd", padding: "10px" }}>
+            <img src={item.image} width="200" />
+            <h3>{item.name}</h3>
+            <p>{item.price}</p>
           </div>
         ))}
       </div>
