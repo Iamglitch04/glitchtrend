@@ -7,6 +7,11 @@ function Admin() {
   const [image, setImage] = useState("");
 
   const addProduct = async () => {
+    if (!name || !price || !image || !description) {
+      alert("Please fill all fields");
+      return;
+    }
+
     try {
       const res = await fetch(
         "https://glitchtrend.onrender.com/api/products",
@@ -17,7 +22,7 @@ function Admin() {
           },
           body: JSON.stringify({
             name,
-            price,
+            price: Number(price),
             description,
             image,
           }),
@@ -26,11 +31,22 @@ function Admin() {
 
       const data = await res.json();
 
-      alert("Product Added ✅");
+      if (res.ok) {
+        alert("Product Added ✅");
+
+        // clear form
+        setName("");
+        setPrice("");
+        setDescription("");
+        setImage("");
+      } else {
+        alert("Failed to add product");
+      }
 
       console.log(data);
     } catch (error) {
-      console.error(error);
+      console.error("Error:", error);
+      alert("Server error");
     }
   };
 
@@ -40,35 +56,35 @@ function Admin() {
 
       <input
         placeholder="Product Name"
+        value={name}
         onChange={(e) => setName(e.target.value)}
       />
 
-      <br />
-      <br />
+      <br /><br />
 
       <input
         placeholder="Price"
+        value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
 
-      <br />
-      <br />
+      <br /><br />
 
       <input
         placeholder="Image URL"
+        value={image}
         onChange={(e) => setImage(e.target.value)}
       />
 
-      <br />
-      <br />
+      <br /><br />
 
       <textarea
         placeholder="Description"
+        value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
 
-      <br />
-      <br />
+      <br /><br />
 
       <button onClick={addProduct}>Add Product</button>
     </div>
